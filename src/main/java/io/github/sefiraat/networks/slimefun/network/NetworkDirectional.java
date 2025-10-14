@@ -12,7 +12,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.bakedlibs.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -59,12 +59,12 @@ public abstract class NetworkDirectional extends NetworkObject {
     protected static final String OWNER_KEY = "uuid";
 
     private static final Set<BlockFace> VALID_FACES = EnumSet.of(
-        BlockFace.UP,
-        BlockFace.DOWN,
-        BlockFace.NORTH,
-        BlockFace.EAST,
-        BlockFace.SOUTH,
-        BlockFace.WEST
+            BlockFace.UP,
+            BlockFace.DOWN,
+            BlockFace.NORTH,
+            BlockFace.EAST,
+            BlockFace.SOUTH,
+            BlockFace.WEST
     );
 
     private static final Map<Location, BlockFace> SELECTED_DIRECTION_MAP = new HashMap<>();
@@ -77,40 +77,40 @@ public abstract class NetworkDirectional extends NetworkObject {
         addItemSetting(this.tickRate);
 
         addItemHandler(
-            new BlockPlaceHandler(false) {
-                @Override
-                public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
-                    NetworkStorage.removeNode(event.getBlock().getLocation());
-                    BlockStorage.addBlockInfo(event.getBlock(), OWNER_KEY, event.getPlayer().getUniqueId().toString());
-                    BlockStorage.addBlockInfo(event.getBlock(), DIRECTION, BlockFace.SELF.name());
-                    NetworkUtils.applyConfig(NetworkDirectional.this, BlockStorage.getInventory(event.getBlock()), event.getPlayer());
-                }
-            },
-            new BlockTicker() {
+                new BlockPlaceHandler(false) {
+                    @Override
+                    public void onPlayerPlace(@Nonnull BlockPlaceEvent event) {
+                        NetworkStorage.removeNode(event.getBlock().getLocation());
+                        BlockStorage.addBlockInfo(event.getBlock(), OWNER_KEY, event.getPlayer().getUniqueId().toString());
+                        BlockStorage.addBlockInfo(event.getBlock(), DIRECTION, BlockFace.SELF.name());
+                        NetworkUtils.applyConfig(NetworkDirectional.this, BlockStorage.getInventory(event.getBlock()), event.getPlayer());
+                    }
+                },
+                new BlockTicker() {
 
-                private int tick = 1;
+                    private int tick = 1;
 
-                @Override
-                public boolean isSynchronized() {
-                    return runSync();
-                }
+                    @Override
+                    public boolean isSynchronized() {
+                        return runSync();
+                    }
 
-                @Override
-                public void tick(Block block, SlimefunItem slimefunItem, Config config) {
-                    if (tick <= 1) {
-                        final BlockMenu blockMenu = BlockStorage.getInventory(block);
-                        onTick(blockMenu, block);
+                    @Override
+                    public void tick(Block block, SlimefunItem slimefunItem, Config config) {
+                        if (tick <= 1) {
+                            final BlockMenu blockMenu = BlockStorage.getInventory(block);
+                            onTick(blockMenu, block);
+                        }
+                    }
+
+                    @Override
+                    public void uniqueTick() {
+                        tick = tick <= 1 ? tickRate.getValue() : tick - 1;
+                        if (tick <= 1) {
+                            onUniqueTick();
+                        }
                     }
                 }
-
-                @Override
-                public void uniqueTick() {
-                    tick = tick <= 1 ? tickRate.getValue() : tick - 1;
-                    if (tick <= 1) {
-                        onUniqueTick();
-                    }
-                }
-            }
         );
     }
 
@@ -203,23 +203,23 @@ public abstract class NetworkDirectional extends NetworkObject {
                 SELECTED_DIRECTION_MAP.put(blockMenu.getLocation().clone(), direction);
 
                 blockMenu.addMenuClickHandler(getNorthSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.NORTH));
+                        directionClick(player, clickAction, blockMenu, BlockFace.NORTH));
                 blockMenu.addMenuClickHandler(getSouthSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.SOUTH));
+                        directionClick(player, clickAction, blockMenu, BlockFace.SOUTH));
                 blockMenu.addMenuClickHandler(getEastSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.EAST));
+                        directionClick(player, clickAction, blockMenu, BlockFace.EAST));
                 blockMenu.addMenuClickHandler(getWestSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.WEST));
+                        directionClick(player, clickAction, blockMenu, BlockFace.WEST));
                 blockMenu.addMenuClickHandler(getUpSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.UP));
+                        directionClick(player, clickAction, blockMenu, BlockFace.UP));
                 blockMenu.addMenuClickHandler(getDownSlot(), (player, i, itemStack, clickAction) ->
-                    directionClick(player, clickAction, blockMenu, BlockFace.DOWN));
+                        directionClick(player, clickAction, blockMenu, BlockFace.DOWN));
             }
 
             @Override
             public boolean canOpen(@Nonnull Block block, @Nonnull Player player) {
                 return this.getSlimefunItem().canUse(player, false)
-                    && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
+                        && Slimefun.getProtectionManager().hasPermission(player, block.getLocation(), Interaction.INTERACT_BLOCK);
             }
 
             @Override
@@ -250,7 +250,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             final Location location = targetMenu.getLocation();
             final SlimefunItem item = BlockStorage.check(location);
             if (item.canUse(player, true)
-                && Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)
+                    && Slimefun.getProtectionManager().hasPermission(player, blockMenu.getLocation(), Interaction.INTERACT_BLOCK)
             ) {
                 targetMenu.open(player);
             }
@@ -266,7 +266,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     @Nonnull
     protected int[] getBackgroundSlots() {
         return new int[]{
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 21, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 16, 17, 18, 19, 21, 23, 24, 25, 26, 27, 28, 29, 21, 31, 32, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44
         };
     }
 
@@ -315,17 +315,17 @@ public abstract class NetworkDirectional extends NetworkObject {
     @Nonnull
     public static ItemStack getDirectionalSlotPane(@Nonnull BlockFace blockFace, @Nonnull SlimefunItem slimefunItem, boolean active) {
         final ItemStack displayStack = new CustomItemStack(
-            slimefunItem.getItem(),
-            Theme.PASSIVE + "Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
+                slimefunItem.getItem(),
+                Theme.PASSIVE + "Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
         );
         final ItemMeta itemMeta = displayStack.getItemMeta();
         if (active) {
-            itemMeta.addEnchant(Enchantment.LUCK, 1, true);
+            itemMeta.addEnchant(Enchantment.UNBREAKING, 1, true); // changed with Enchantment.LUCK
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         itemMeta.setLore(List.of(
-            Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-            Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+                Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
+                Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
         ));
         displayStack.setItemMeta(itemMeta);
         return displayStack;
@@ -335,25 +335,25 @@ public abstract class NetworkDirectional extends NetworkObject {
     public static ItemStack getDirectionalSlotPane(@Nonnull BlockFace blockFace, @Nonnull Material blockMaterial, boolean active) {
         if (blockMaterial.isItem() && !blockMaterial.isAir()) {
             final ItemStack displayStack = new CustomItemStack(
-                blockMaterial,
-                Theme.PASSIVE + "Direction " + blockFace.name() + " (" + blockMaterial.name() + ")"
+                    blockMaterial,
+                    Theme.PASSIVE + "Direction " + blockFace.name() + " (" + blockMaterial.name() + ")"
             );
             final ItemMeta itemMeta = displayStack.getItemMeta();
             if (active) {
-                itemMeta.addEnchant(Enchantment.LUCK, 1, true);
+                itemMeta.addEnchant(Enchantment.UNBREAKING, 1, true); // changed with Enchantment.LUCK
                 itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             }
             itemMeta.setLore(List.of(
-                Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
-                Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
+                    Theme.CLICK_INFO + "Left Click: " + Theme.PASSIVE + "Set Direction",
+                    Theme.CLICK_INFO + "Shift Left Click: " + Theme.PASSIVE + "Open Target Block"
             ));
             displayStack.setItemMeta(itemMeta);
             return displayStack;
         } else {
             Material material = active ? Material.GREEN_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
             return new CustomItemStack(
-                material,
-                ChatColor.GRAY + "Set direction: " + blockFace.name()
+                    material,
+                    ChatColor.GRAY + "Set direction: " + blockFace.name()
             );
         }
     }
@@ -371,6 +371,14 @@ public abstract class NetworkDirectional extends NetworkObject {
         final Vector faceVector = blockFace.getDirection().clone().multiply(-1);
         final Vector pushVector = faceVector.clone().multiply(2);
         final Location displayLocation = location.clone().add(0.5, 0.5, 0.5).add(faceVector);
-        location.getWorld().spawnParticle(Particle.REDSTONE, displayLocation, 0, pushVector.getX(), pushVector.getY(), pushVector.getZ(), getDustOptions());
+        location.getWorld().spawnParticle(
+                Particle.DUST,  // changed with Particle.REDSTONE
+                displayLocation,
+                0,
+                pushVector.getX(),
+                pushVector.getY(),
+                pushVector.getZ(),
+                getDustOptions()
+        );
     }
 }
