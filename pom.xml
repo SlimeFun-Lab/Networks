@@ -66,8 +66,7 @@
     </properties>
 
     <build>
-<!--        <finalName>${project.name} v${project.version}</finalName>-->
-        <finalName>${project.name} v${project.version} ${final.name.suffix}</finalName>
+        <finalName>${project.name} v${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -143,10 +142,6 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-<!--        <repository>-->
-<!--            <id>jeffMediaPublic</id>-->
-<!--            <url>https://repo.jeff-media.com/public</url>-->
-<!--        </repository>-->
         <repository>
             <id>mcmmo-repo</id>
             <url>https://nexus.neetgames.com/repository/maven-public</url>
@@ -163,12 +158,12 @@
 
     <dependencies>
         <!-- Core -->
-<!--        <dependency>-->
-<!--            <groupId>org.spigotmc</groupId>-->
-<!--            <artifactId>spigot-api</artifactId>-->
-<!--            <version>1.19-R0.1-SNAPSHOT</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.github.SlimeFun-Lab</groupId>
             <artifactId>Slimefun4</artifactId>
@@ -176,9 +171,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>dev.sefiraat</groupId>
+            <groupId>com.github.SlimeFun-Lab</groupId>
             <artifactId>SefiLib</artifactId>
-            <version>0.2.6</version>
+            <version>9a35958deb</version>
             <scope>compile</scope>
         </dependency>
 
@@ -239,42 +234,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>legacy</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <maven.compiler.release>16</maven.compiler.release>
-                <final.name.suffix>(legacy)</final.name.suffix>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.spigotmc</groupId>
-                    <artifactId>spigot-api</artifactId>
-                    <version>1.19-R0.1-SNAPSHOT</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>modern-1.21.1</id>
-            <properties>
-                <maven.compiler.release>21</maven.compiler.release>
-                <final.name.suffix>(mc1.21.1)</final.name.suffix>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>io.papermc.paper</groupId>
-                    <artifactId>paper-api</artifactId>
-                    <version>1.21.1-R0.1-SNAPSHOT</version>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
-
 </project>

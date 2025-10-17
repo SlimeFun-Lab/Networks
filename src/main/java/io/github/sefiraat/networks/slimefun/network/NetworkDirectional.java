@@ -12,7 +12,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
@@ -276,7 +276,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     }
 
     @Nullable
-    protected CustomItemStack getOtherBackgroundStack() {
+    protected ItemStack getOtherBackgroundStack() {
         return null;
     }
 
@@ -314,7 +314,7 @@ public abstract class NetworkDirectional extends NetworkObject {
 
     @Nonnull
     public static ItemStack getDirectionalSlotPane(@Nonnull BlockFace blockFace, @Nonnull SlimefunItem slimefunItem, boolean active) {
-        final ItemStack displayStack = new CustomItemStack(
+        final ItemStack displayStack = CustomItemStack.create(
                 slimefunItem.getItem(),
                 Theme.PASSIVE + "Direction " + blockFace.name() + " (" + ChatColor.stripColor(slimefunItem.getItemName()) + ")"
         );
@@ -334,7 +334,7 @@ public abstract class NetworkDirectional extends NetworkObject {
     @Nonnull
     public static ItemStack getDirectionalSlotPane(@Nonnull BlockFace blockFace, @Nonnull Material blockMaterial, boolean active) {
         if (blockMaterial.isItem() && !blockMaterial.isAir()) {
-            final ItemStack displayStack = new CustomItemStack(
+            final ItemStack displayStack = CustomItemStack.create(
                     blockMaterial,
                     Theme.PASSIVE + "Direction " + blockFace.name() + " (" + blockMaterial.name() + ")"
             );
@@ -351,7 +351,7 @@ public abstract class NetworkDirectional extends NetworkObject {
             return displayStack;
         } else {
             Material material = active ? Material.GREEN_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
-            return new CustomItemStack(
+            return CustomItemStack.create(
                     material,
                     ChatColor.GRAY + "Set direction: " + blockFace.name()
             );

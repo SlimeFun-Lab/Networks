@@ -11,7 +11,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
@@ -33,7 +33,7 @@ public class NetworkPowerDisplay extends NetworkObject {
     };
     private static final int DISPLAY_SLOT = 4;
 
-    private static final CustomItemStack EMPTY = new CustomItemStack(
+    private static final ItemStack EMPTY = CustomItemStack.create(
         Material.RED_STAINED_GLASS_PANE,
         Theme.CLICK_INFO + "Status",
         Theme.PASSIVE + "Disconnected"
@@ -98,8 +98,8 @@ public class NetworkPowerDisplay extends NetworkObject {
         };
     }
 
-    private static CustomItemStack getChargeStack(long charge) {
-        return new CustomItemStack(
+    private static ItemStack getChargeStack(long charge) {
+        return CustomItemStack.create(
             Material.GREEN_STAINED_GLASS_PANE,
             Theme.CLICK_INFO + "Status",
             Theme.PASSIVE + "Current Network Charge: " + charge + "j"

@@ -3,7 +3,6 @@ package io.github.sefiraat.networks.slimefun.network;
 import com.gmail.nossr50.mcMMO;
 import dev.sefiraat.sefilib.misc.ParticleUtils;
 import dev.sefiraat.sefilib.world.LocationUtils;
-import io.github.bakedlibs.dough.blocks.BlockPosition;
 import io.github.sefiraat.networks.NetworkStorage;
 import io.github.sefiraat.networks.Networks;
 import io.github.sefiraat.networks.managers.SupportedPluginManager;
@@ -16,7 +15,8 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.bakedlibs.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.blocks.BlockPosition;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
 import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
@@ -53,7 +53,7 @@ public class NetworkControlV extends NetworkDirectional {
 
     private final Set<BlockPosition> blockCache = new HashSet<>();
 
-    public static final CustomItemStack TEMPLATE_BACKGROUND_STACK = new CustomItemStack(
+    public static final ItemStack TEMPLATE_BACKGROUND_STACK = CustomItemStack.create(
         Material.BLUE_STAINED_GLASS_PANE, Theme.PASSIVE + "Paste items matching template"
     );
 
@@ -166,7 +166,7 @@ public class NetworkControlV extends NetworkDirectional {
 
     @Nullable
     @Override
-    protected CustomItemStack getOtherBackgroundStack() {
+    protected ItemStack getOtherBackgroundStack() {
         return TEMPLATE_BACKGROUND_STACK;
     }
 
